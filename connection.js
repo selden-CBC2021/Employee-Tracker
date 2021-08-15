@@ -80,9 +80,9 @@ const startApp = () => {
         connection.query(query, (err, res) => {
           if (err) throw err;
           console.table(res);
-          });
           startApp();
-        };
+        });
+      };
       
   
   const departmentView = () => {
@@ -122,7 +122,7 @@ const startApp = () => {
       message: 'What is the role ID number of this employee?'
     },
     {
-      name: 'lastName',
+      name: 'managerID',
       type: 'input',
       message: 'What is the manager ID number of this employee?'
     }
@@ -138,6 +138,85 @@ const startApp = () => {
           }) 
         });
     };
+
+    const roleAdd = () => {
+      inquirer
+        .prompt([
+      {
+          name: 'roleName',
+          type: 'input',
+          message: 'What is the name of the role you would like to add?'
+      },
+      {
+          name: 'salary',
+          type: 'input',
+          message: 'What is the salary for this role?'
+      },
+      {
+        name: 'deptID',
+        type: 'input',
+        message: 'What is the department ID for this role?'
+      }
+    ])
+      .then((answer) => {
+          connection.query(
+            'INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)', 
+            [answer.roleName, answer.salary, answer.deptID],
+            (err, res) => {
+              if (err) throw err;
+              console.table(res)         
+              startApp();
+            }) 
+          });
+      };
+
+      const departmentAdd = () => {
+        inquirer
+          .prompt([
+        {
+            name: 'deptName',
+            type: 'input',
+            message: 'What is the name of the department?'
+        }
+      ])
+        .then((answer) => {
+            connection.query(
+              'INSERT INTO department (name) VALUES (?)', 
+              [answer.deptName],
+              (err, res) => {
+                if (err) throw err;
+                console.table(res)         
+                startApp();
+              }) 
+            });
+        };
+      const employeeUpdate = () => {
+        inquirer
+          .prompt([
+            {
+              name: 'employeeUpdate',
+              type: 'input',
+              message: 'Which employee do you want to update?',
+            },
+            {
+              name: 'roleUpdate',
+              type: 'input',
+              message: 'What role do you want to update to?'
+            }
+          ])
+          .then((answer) => {
+            connection.query(
+              'UPDATE employee SET role_id=? WHERE first_name=?',
+              [answer.roleUpdate, answer.employeeUpdate],
+              (err, res) => {
+                if (err) throw err;
+                console.table(res)         
+                startApp();  
+              }
+            )
+          })
+      }
+
   
   
 
