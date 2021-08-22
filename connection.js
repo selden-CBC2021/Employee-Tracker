@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
 const consoleTable = require('console.table');
+require('dotenv').config();
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -8,10 +9,11 @@ const connection = mysql.createConnection({
     // your username
     user: 'root',
     // your password
-    password: 'ryanrico1',
+    password: process.env.DB_PASSWORD,
     database: 'company_db'
 });
 
+// connect to mysql and start the App
 connection.connect((err) => {
     if (err) throw err;
     console.log(`connected as id ${connection.threadId}`);
