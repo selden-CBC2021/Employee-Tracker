@@ -1,8 +1,9 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
-const consoleTable = require('console.table');
+require('console.table');
 require('dotenv').config();
 
+//create connection to mysql workbench
 const connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
@@ -19,6 +20,7 @@ connection.connect((err) => {
     console.log(`connected as id ${connection.threadId}`);
     startApp();
 });
+
 const startApp = () => {
     inquirer
       .prompt({
@@ -69,10 +71,6 @@ const startApp = () => {
             case 'Exit':
                 connection.end();
                 break;
-
-            default:
-            console.log(`Invalid action: ${answer.action}`);
-            break;
         }
       });
   };
