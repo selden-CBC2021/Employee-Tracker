@@ -10,7 +10,11 @@
   ## Installation
   --Clone the repo and npm install the required packages.
   ## Usage
-  --Type node index in the terminal to start. You can view/add/update employees/roles/departments. Use the arrow keys to move up and down and enter to select the option you want. 
+  --Type node index in the terminal to start. You can view/add/update employees/roles/departments. Use the arrow keys to move up and down and enter to select the option you want. Below is a demo video on how to use the app.
+
+  ![alt text](assets/images/employeetracker.png)
+  
+  [Video here!](https://www.youtube.com/watch?v=n48Hl4OHu5o)
   ## License
   --https://opensource.org/licenses/MIT
   <br />
