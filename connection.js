@@ -17,10 +17,14 @@ const connection = mysql.createConnection({
 // connect to mysql and start the App
 connection.connect((err) => {
     if (err) throw err;
-    console.log(`connected as id ${connection.threadId}`);
+    // console.log(`connected as id ${connection.threadId}`);
     startApp();
 });
 
+console.table(
+  "\n------------ EMPLOYEE TRACKER ------------\n"
+)
+// Gives a list of options to run
 const startApp = () => {
     inquirer
       .prompt({
@@ -70,13 +74,25 @@ const startApp = () => {
 
             case 'Exit':
                 connection.end();
-                break;
+                process.exit();
+                
         }
       });
   };
-  
+  // joining tables to display department and role info with the employees
   const employeeView = () => {
-    const query = 'SELECT * FROM employee';
+    const query = `SELECT employee.id, 
+    employee.first_name, 
+    employee.last_name, 
+    role.title, 
+    department.name AS department,
+    role.salary, 
+    CONCAT (manager.first_name, " ", manager.last_name) AS manager
+FROM employee
+    LEFT JOIN role ON employee.role_id = role.id
+    LEFT JOIN department ON role.department_id = department.id
+    LEFT JOIN employee manager ON employee.manager_id = manager.id`;
+
         connection.query(query, (err, res) => {
           if (err) throw err;
           console.table(res);
@@ -84,7 +100,7 @@ const startApp = () => {
         });
       };
       
-  
+  // View all departments
   const departmentView = () => {
     const query = 'SELECT * FROM department';
     connection.query(query, (err, res) => {
@@ -93,7 +109,7 @@ const startApp = () => {
       startApp();
     });
   };
-  
+  // View all roles
   const roleView = () => {
     const query = 'SELECT * FROM role';
     connection.query(query, (err, res) => {
@@ -102,7 +118,7 @@ const startApp = () => {
       startApp();
     });
   };
-  
+  // function to add employee when given first and last name, the role ID, and the manager ID they will be working under.
   const employeeAdd = () => {
     inquirer
       .prompt([
@@ -133,6 +149,7 @@ const startApp = () => {
           [answer.firstName, answer.lastName, answer.roleID, answer.managerID],
           (err, res) => {
             if (err) throw err;
+            console.log(`Employee ${answer.firstName} ${answer.lastName} was created successfully!`);
             console.table(res)         
             startApp();
           }) 
@@ -190,6 +207,7 @@ const startApp = () => {
               }) 
             });
         };
+      // function to update employees role based off their first name
       const employeeUpdate = () => {
         inquirer
           .prompt([

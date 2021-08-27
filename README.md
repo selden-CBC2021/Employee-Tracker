@@ -10,7 +10,7 @@
   ## Installation
   --Clone the repo and npm install the required packages.
   ## Usage
-  --Type node index in the terminal to start. You can view/add/update employees/roles/departments. 
+  --Type node index in the terminal to start. You can view/add/update employees/roles/departments. Use the arrow keys to move up and down and enter to select the option you want. 
   ## License
   --https://opensource.org/licenses/MIT
   <br />
