@@ -233,7 +233,8 @@ FROM employee
               }
             )
           })
-      }
+      };
+      
 
   
   
